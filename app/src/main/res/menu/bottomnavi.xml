@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_profil"
+        android:icon="@drawable/person"
+        android:title="*" />
+    <item
+        android:id="@+id/action_fiyatListe"
+        android:icon="@drawable/money"
+        android:title="*" />
+    <item
+        android:id="@+id/action_haberler"
+        android:icon="@drawable/haberler"
+        android:title="*" />
+    <item
+        android:id="@+id/action_mesaj"
+        android:icon="@drawable/send"
+        android:title="*" />
+
+</menu>
