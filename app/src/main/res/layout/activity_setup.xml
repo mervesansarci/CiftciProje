@@ -7,17 +7,6 @@
     android:background="#d2f5cd"
     tools:context=".SetupActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/setupToolbar"
-        android:layout_width="417dp"
-        android:layout_height="60dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -35,7 +24,7 @@
         android:id="@+id/setup_name"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Adı"
         android:inputType="textPersonName"
@@ -49,12 +38,12 @@
         android:id="@+id/setup_surname"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="72dp"
         android:ems="10"
         android:hint="Soyadı"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
@@ -62,23 +51,34 @@
         android:id="@+id/setup_bd"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="168dp"
+        android:layout_marginBottom="220dp"
         android:ems="10"
         android:hint="Doğum Tarihi"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/btn_setup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/setup_muhNo"
+        android:layout_width="390dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Ziraat Mühendisleri Odası Numarası"
+        android:inputType="textPersonName"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <Button
         android:id="@+id/btn_setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="17dp"
         android:text="Bilgilerimi Kaydet"
         app:backgroundTint="#A4D99C"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,10 +90,49 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="411dp"
         android:layout_height="27dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setupToolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="216dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginBottom="184dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setup_bd">
+
+        <RadioButton
+            android:id="@+id/radioCiftci"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Çiftçi" />
+
+        <RadioButton
+            android:id="@+id/radioMuhendis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="Mühendis" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/seciliStatu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="177dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,13 +60,16 @@ public class SetupActivity extends AppCompatActivity {
     private CircleImageView profileView;
     private Uri mainImageURI= null;
     private String user_id;
-    private EditText setupName, setupSurname, setupBD;
+    private EditText setupName, setupSurname, setupBD,setupNo;
     private Button btnSetup;
     private ProgressBar setupProgress;
     private UploadTask.TaskSnapshot taskSnapshot;
     private Spinner setupSpinner;
     private FirebaseFirestore db;
     private Toolbar setupToolbar;
+    private RadioButton radioCiftci,radioMuhendis;
+    private RadioGroup radioGroup;
+    private TextView seciliStatu;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Kullanicilar");
 
@@ -89,14 +95,20 @@ public class SetupActivity extends AppCompatActivity {
         setupName=findViewById(R.id.setup_name);
         setupSurname=findViewById(R.id.setup_surname);
         setupBD=findViewById(R.id.setup_bd);
+        setupNo=findViewById(R.id.setup_muhNo);
         btnSetup=findViewById(R.id.btn_setup);
         setupProgress= findViewById(R.id.setupprogressBar);
+        radioCiftci=findViewById(R.id.radioCiftci);
+        radioMuhendis=findViewById(R.id.radioMuhendis);
+        seciliStatu=findViewById(R.id.seciliStatu);
 
-        setupToolbar=findViewById(R.id.setupToolbar);
-        setSupportActionBar(setupToolbar);
-        setupToolbar.setTitle("Hesap Bilgileri");
-        setupToolbar.setBackgroundColor(Color.parseColor("#288319"));
-        setupToolbar.setTitleTextColor(Color.parseColor("#f8f8f8"));
+
+
+        //setupToolbar=findViewById(R.id.setupToolbar);
+        //setSupportActionBar(setupToolbar);
+        //setupToolbar.setTitle("Hesap Bilgileri");
+        //setupToolbar.setBackgroundColor(Color.parseColor("#288319"));
+        //setupToolbar.setTitleTextColor(Color.parseColor("#f8f8f8"));
 
         String user_name= setupName.getText().toString().trim();
         String user_surname=setupSurname.getText().toString().trim();
@@ -104,12 +116,55 @@ public class SetupActivity extends AppCompatActivity {
         String user_email= firebaseAuth.getCurrentUser().getEmail().trim();
         user_id= firebaseAuth.getCurrentUser().getUid();
 
+        setupNo.setVisibility(View.INVISIBLE);
+
+
+        radioCiftci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setupNo.setVisibility(View.INVISIBLE);
+                seciliStatu.setText(radioCiftci.getText());
+
+            }
+        });
+
+        radioMuhendis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setupNo.setVisibility(View.VISIBLE);
+                seciliStatu.setText(radioMuhendis.getText());
+
+
+            }
+        });
+
+
         btnSetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                int selectedId = radioGroup.getCheckedRadioButtonId();
+//                switch (selectedId){
+//
+//                    case R.id.radioCiftci:
+//                        Toast.makeText(getApplicationContext(), "AAAAAAAAAA", Toast.LENGTH_SHORT).show();
+//                        break;
+//
+//                    case R.id.radioMuhendis:
+//                        setupNo.setVisibility(View.VISIBLE);
+//                        break;
+//
+//                    default:
+//                        setupNo.setVisibility(View.INVISIBLE);
+//
+//                }
+
                 String user_name= setupName.getText().toString().trim();
                 String user_surname=setupSurname.getText().toString().trim();
                 String user_bd=setupBD.getText().toString().trim();
+                String user_statu=seciliStatu.getText().toString().trim();
                 String user_email= firebaseAuth.getCurrentUser().getEmail().trim();
                 user_id= firebaseAuth.getCurrentUser().getUid();
                 Map<String, Object> kullanici = new HashMap<>();
@@ -119,6 +174,14 @@ public class SetupActivity extends AppCompatActivity {
                 kullanici.put("adi",user_name);
                 kullanici.put("soyadi",user_surname);
                 kullanici.put("dogumGunu",user_bd);
+                kullanici.put("çiftçi mi mühendis mi",user_statu);
+
+
+                Intent intent = new Intent(SetupActivity.this,MainActivity.class);
+                intent.putExtra("Ad",user_name); //veri gönderiliyor
+                intent.putExtra("Ad",user_surname);
+                startActivity(intent);
+
 
                 db.collection("kullanici").add(kullanici).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

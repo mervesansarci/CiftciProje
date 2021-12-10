@@ -62,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
         mainToolbar.setTitleTextColor(Color.parseColor("#f8f8f8"));
         setSupportActionBar(mainToolbar);
 
+        Intent intent = getIntent();
+        String ciftciIsım = intent.getStringExtra("isim");
+        String ciftciSoyisim = intent.getStringExtra("soyad");
+
+        Bundle bundle= new Bundle();
+
+
+
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

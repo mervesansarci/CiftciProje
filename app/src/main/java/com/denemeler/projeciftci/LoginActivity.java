@@ -56,9 +56,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (parent.getSelectedItem().toString().equals(statu[0])){
 
+
                 }
                 else if (parent.getSelectedItem().toString().equals(statu[1])){
 
+                    sendToMain();
         }
             }
 
@@ -120,6 +122,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent mainIntent= new Intent(LoginActivity.this, MainActivity.class);
         startActivity(mainIntent);
         finish();
+    }
+
+    public void sendToEngineerMain(){
+
     }
 
 }
