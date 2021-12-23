@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -140,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_settings:
-                Intent settingsIntent= new Intent(MainActivity.this,SetupActivity.class);
-                startActivity(settingsIntent);
+               Intent settingsIntent= new Intent(MainActivity.this,SettingsActivity.class);
+              startActivity(settingsIntent);
 
             default:
                 return true;

@@ -84,7 +84,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                sendToMain();
+                                if(mAut.getCurrentUser().isEmailVerified()){
+                                    sendToMain();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "E-postanızı doğrulayın.", Toast.LENGTH_SHORT).show();
+
+                                }
+
                             }
                             else{
                                 String errorMessage= task.getException().getMessage();

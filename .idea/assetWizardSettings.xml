@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/more_vert/baseline_more_vert_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/save/baseline_save_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_more_vert_24" />
+                            <entry key="outputName" value="ic_baseline_save_24" />
                             <entry key="sourceFile" value="C:\Users\merve\AndroidStudioProjects\projeCiftci" />
                           </map>
                         </option>

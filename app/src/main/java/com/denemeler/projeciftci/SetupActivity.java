@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,9 +39,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Tag;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SnapshotMetadata;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -70,6 +73,10 @@ public class SetupActivity extends AppCompatActivity {
     private RadioButton radioCiftci,radioMuhendis;
     private RadioGroup radioGroup;
     private TextView seciliStatu;
+    private SnapshotMetadata metadata;
+    private CollectionReference collectionReference;
+
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Kullanicilar");
 
@@ -103,18 +110,13 @@ public class SetupActivity extends AppCompatActivity {
         seciliStatu=findViewById(R.id.seciliStatu);
 
 
-
-        //setupToolbar=findViewById(R.id.setupToolbar);
-        //setSupportActionBar(setupToolbar);
-        //setupToolbar.setTitle("Hesap Bilgileri");
-        //setupToolbar.setBackgroundColor(Color.parseColor("#288319"));
-        //setupToolbar.setTitleTextColor(Color.parseColor("#f8f8f8"));
-
         String user_name= setupName.getText().toString().trim();
         String user_surname=setupSurname.getText().toString().trim();
         String user_bd=setupBD.getText().toString().trim();
         String user_email= firebaseAuth.getCurrentUser().getEmail().trim();
         user_id= firebaseAuth.getCurrentUser().getUid();
+
+
 
         setupNo.setVisibility(View.INVISIBLE);
 
@@ -145,70 +147,63 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                int selectedId = radioGroup.getCheckedRadioButtonId();
-//                switch (selectedId){
-//
-//                    case R.id.radioCiftci:
-//                        Toast.makeText(getApplicationContext(), "AAAAAAAAAA", Toast.LENGTH_SHORT).show();
-//                        break;
-//
-//                    case R.id.radioMuhendis:
-//                        setupNo.setVisibility(View.VISIBLE);
-//                        break;
-//
-//                    default:
-//                        setupNo.setVisibility(View.INVISIBLE);
-//
-//                }
+                    KullaniciBilgi kullaniciBilgi= new KullaniciBilgi();
+                    CollectionReference dbKullanici= db.collection("KullaniciBilgileri");
+                    String name= setupName.getText().toString().trim();
+                    String surname= setupSurname.getText().toString().trim();
+                    String dogumGunu= setupBD.getText().toString().trim();
+                    String secilistatu= seciliStatu.getText().toString().trim();
+                    String muhNo= setupNo.getText().toString().trim();
+                    String user_email= firebaseAuth.getCurrentUser().getEmail().trim();
+                    user_id= firebaseAuth.getCurrentUser().getUid();
 
-                String user_name= setupName.getText().toString().trim();
-                String user_surname=setupSurname.getText().toString().trim();
-                String user_bd=setupBD.getText().toString().trim();
-                String user_statu=seciliStatu.getText().toString().trim();
-                String user_email= firebaseAuth.getCurrentUser().getEmail().trim();
-                user_id= firebaseAuth.getCurrentUser().getUid();
-                Map<String, Object> kullanici = new HashMap<>();
-                kullanici.put("profilresmi",mainImageURI.toString());
-                kullanici.put("kullaniciID",user_id);
-                kullanici.put("eposta",user_email);
-                kullanici.put("adi",user_name);
-                kullanici.put("soyadi",user_surname);
-                kullanici.put("dogumGunu",user_bd);
-                kullanici.put("çiftçi mi mühendis mi",user_statu);
+                    Map<String, Object> kullanicilarListesi = new HashMap<>();
+                    kullaniciBilgi.setAd(name);
+                    kullaniciBilgi.setSoyad(surname);
+                    kullaniciBilgi.setEposta(user_email);
+                    kullaniciBilgi.setDogumGunu(dogumGunu);
+                    kullaniciBilgi.setStatu(secilistatu);
+                    kullaniciBilgi.setMuhendisNo(muhNo);
+                    kullaniciBilgi.setProfilFoto(mainImageURI.toString());
 
 
-                Intent intent = new Intent(SetupActivity.this,MainActivity.class);
-                intent.putExtra("Ad",user_name); //veri gönderiliyor
-                intent.putExtra("Ad",user_surname);
-                startActivity(intent);
 
-
-                db.collection("kullanici").add(kullanici).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getApplicationContext(),"eklendi",Toast.LENGTH_LONG).show();
-                        Intent mainIntent= new Intent(SetupActivity.this,MainActivity.class);
-                        startActivity(mainIntent);
-
-                    }
-                });
-                if (!TextUtils.isEmpty(user_name) &&!TextUtils.isEmpty(user_surname) && !TextUtils.isEmpty(user_bd) && mainImageURI!=null){
-
-                    StorageReference imagePath= storageRef.getReference().child("profil_fotolari").child(user_id+"+ jpg");
-                    imagePath.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    dbKullanici.add(kullaniciBilgi).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if (task.isSuccessful()){
-                                UploadTask.TaskSnapshot downloadUri = task.getResult();
+                        public void onSuccess(@NonNull DocumentReference documentReference) {
 
-                            }
+                            Toast.makeText(getApplicationContext(), "Kullanıcı Eklendi", Toast.LENGTH_SHORT).show();
+                            Intent mainIntent= new Intent(SetupActivity.this,MainActivity.class);
+                            startActivity(mainIntent);
 
-                            else{
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Hata!", Toast.LENGTH_SHORT).show();
 
-                            }
                         }
                     });
-                }
+
+                    if (!TextUtils.isEmpty(user_name) &&!TextUtils.isEmpty(user_surname) && !TextUtils.isEmpty(user_bd) && mainImageURI!=null){
+
+                        StorageReference imagePath= storageRef.getReference().child("profil_fotolari").child(user_id+"+ jpg");
+                        imagePath.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    ImageAdd();
+
+                                }
+
+                                else{
+
+                                }
+                            }
+                        });
+                    }
+
+
             }
 
             private void ImageAdd() {

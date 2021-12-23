@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +28,7 @@ public class RegisterActivity2 extends AppCompatActivity {
     private EditText reg_loginEmailText, reg_loginPassText,reg_confirm_passText;
     private Button reg_btn, reg_login_btn;
     private FirebaseAuth mAut;
+    private FirebaseUser fAut;
     private ProgressBar regprogressBar;
 
 
@@ -33,6 +38,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_register2);
 
         mAut= FirebaseAuth.getInstance();
+
         //mFirestore= FirebaseFirestore.getInstance();
 
         reg_loginEmailText=findViewById(R.id.reg_email);
@@ -67,9 +73,24 @@ public class RegisterActivity2 extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
 
-                                    Intent setupIntent= new Intent(RegisterActivity2.this,SetupActivity.class);
-                                    startActivity(setupIntent);
+                                    FirebaseUser user=mAut.getCurrentUser();
+                                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(@NonNull Void unused) {
 
+
+                                            Toast.makeText(getApplicationContext(), "Kayıt oluşturuldu. E-posta doğrulama için lütfen e-postanızı kontrol edin.", Toast.LENGTH_SHORT).show();
+                                            Intent logIntent= new Intent(RegisterActivity2.this,SetupActivity.class);
+                                            startActivity(logIntent);
+
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
 
                                 }
                                 else{
@@ -91,20 +112,8 @@ public class RegisterActivity2 extends AppCompatActivity {
 
                     }
                 }
-
             }
         });
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser= mAut.getCurrentUser();
-        if (currentUser!=null){
-            sentToMain();
-        }
     }
 
     private void sentToMain() {
@@ -113,8 +122,5 @@ public class RegisterActivity2 extends AppCompatActivity {
         startActivity(mainIntent);
         finish();
     }
-
-
-
 
     }

@@ -24,65 +24,66 @@
         android:id="@+id/setup_name"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Adı"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/setup_surname"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <EditText
         android:id="@+id/setup_surname"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Soyadı"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/setup_bd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/setup_bd"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="220dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Doğum Tarihi"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btn_setup"
+        app:layout_constraintBottom_toTopOf="@+id/setup_muhNo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/setup_muhNo"
         android:layout_width="390dp"
         android:layout_height="56dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginBottom="48dp"
         android:ems="10"
         android:hint="Ziraat Mühendisleri Odası Numarası"
         android:inputType="textPersonName"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btn_setup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="18dp"
         android:text="Bilgilerimi Kaydet"
         app:backgroundTint="#A4D99C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
@@ -92,47 +93,47 @@
         android:layout_height="27dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="216dp"
-        android:layout_height="105dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="184dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="296dp"
+        android:layout_height="71dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/setup_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setup_bd">
+        app:layout_constraintHorizontal_bias="0.739"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <RadioButton
-            android:id="@+id/radioCiftci"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Çiftçi" />
 
         <RadioButton
             android:id="@+id/radioMuhendis"
-            android:layout_width="match_parent"
+            android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:text="Mühendis" />
+            android:text="Mühendis"
+            tools:layout_editor_absoluteX="-46dp"
+            tools:layout_editor_absoluteY="366dp" />
+
+        <RadioButton
+            android:id="@+id/radioCiftci"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:text="Çiftçi" />
+
     </RadioGroup>
 
     <TextView
         android:id="@+id/seciliStatu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="177dp"
+        android:layout_marginBottom="459dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
